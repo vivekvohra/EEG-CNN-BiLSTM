@@ -4,7 +4,7 @@ End-to-end demo that serves a Keras **CNN-BiLSTM** EEG classifier from **AWS Lam
 You can upload an EEGLAB `.set` file (or run a demo prediction), and get class probabilities back.
 
 
-[**Live:**](https://az-eeg-site-109598917777.s3.ap-south-1.amazonaws.com/index.html)  
+[**Live**](https://az-eeg-site-109598917777.s3.ap-south-1.amazonaws.com/index.html)  
 [**Blog**](https://dev.to/vivekvohra/deploying-a-cnn-bilstm-model-on-aws-lambda-4kcj)
 
 ```
