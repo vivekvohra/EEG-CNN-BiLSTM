@@ -31,7 +31,7 @@ def _compute_rbp_from_epochs(epochs, fmin=0.5, fmax=45.0):
 def preprocess_eeg_to_model_input(file_path: str):
     """
     Reads an EEGLAB .set file and produces a model-ready tensor.
-    Your training pipeline used:
+    Our training pipeline used:
       - Bandpass 0.5–45 Hz
       - Fixed-length epochs: 2s with 1s overlap
       - Welch PSD -> Relative Band Power for 5 bands
@@ -56,3 +56,4 @@ def preprocess_eeg_to_model_input(file_path: str):
 
     # Return (channels, 5, 1); the caller will add batch dim as needed
     return rbp_mean
+
