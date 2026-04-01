@@ -205,3 +205,36 @@ pingBtn.onclick = async () => {
     setStatus('API not reachable ❌');
   }
 };
+
+
+
+
+// --- Auto-Warmup on Page Load ---
+window.addEventListener('DOMContentLoaded', async () => {
+  const apiBase = getApiBase();
+  if (!apiBase) return;
+
+  setStatus('Waking up AI Model (this takes ~30 seconds)...', true);
+  setButtonsDisabled(true); // Prevent uploads while waking up
+
+  try {
+    // We expect a timeout error here, so we abort the fetch at 35 seconds
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 35000);
+
+    const r = await fetch(apiBase + '/health', { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
+    setStatus('AI Model Ready 🧠✅');
+  } catch (e) {
+    // If API Gateway times out at 29 seconds, the Lambda is STILL warming up in the background!
+    // We wait an extra 6 seconds just to be safe, then unlock the UI.
+    setTimeout(() => {
+        setStatus('AI Model Ready 🧠✅');
+        setButtonsDisabled(false);
+    }, 6000);
+    return;
+  }
+  
+  setButtonsDisabled(false);
+});
