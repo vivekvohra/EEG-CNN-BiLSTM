@@ -56,7 +56,10 @@ class PredictRequest(BaseModel):
 # -------- Routes --------
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    # This forces the ~35-second model load to happen immediately.
+    # API Gateway might time out to the frontend, but Lambda will finish this in the background!
+    get_model()
+    return {"status": "ok", "message": "Model is loaded and warm!"}
 
 @app.get("/presign")
 def presign(key: str, expires: int = 3600):
@@ -94,7 +97,8 @@ def predict(request: PredictRequest):
         if X.ndim == 3:
             X = np.expand_dims(X, axis=0)
 
-        preds = model.predict(X, verbose=0)
+        current_model = get_model()
+        preds = current_model.predict(X, verbose=0)
         probs = preds[0].astype(float).tolist()
         top_idx = int(np.argmax(preds[0]))
         confidence = float(preds[0][top_idx])
