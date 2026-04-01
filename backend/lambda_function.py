@@ -34,9 +34,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load model globally to keep it warm
-model = load_model(MODEL_PATH, compile=False)
+
 CLASS_LABELS = os.environ.get("CLASS_LABELS", "Alzheimer,FTD,Control").split(",")
+model = None  # Start with no model to allow instant boot
+
+def get_model():
+    # Lazy load the model only when needed, but keep it warm for future requests.
+    global model
+    if model is None:
+        print("Loading TensorFlow model into memory...")
+        model = load_model(MODEL_PATH, compile=False)
+    return model
+
 
 # -------- Pydantic Models --------
 class PredictRequest(BaseModel):
