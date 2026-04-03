@@ -10,8 +10,8 @@ An end-to-end deep learning pipeline that classifies EEG (Electroencephalogram) 
 
 ## 📽️ Demo Video
 
-![Project Demo](https://github.com/user-attachments/assets/1141bf82-997f-40cb-a9b8-2ffe1c7f22f6)
-*(Update this link with your new dark-mode screen recording!)*
+![eeg-demo](https://github.com/user-attachments/assets/33502deb-e077-4603-b67e-ea71ade4a939)
+
 
 
 ## 🏗️ System Architecture
