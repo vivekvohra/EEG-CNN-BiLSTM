@@ -22,7 +22,7 @@ The application is built for high availability and zero idle cost, utilizing a *
 
 1.  **Frontend:** Optimized JS/CSS hosted on **AWS S3** and distributed globally via **AWS CloudFront** (HTTPS).
 2.  **API Layer:** **AWS API Gateway** (HTTP API) handles CORS and routes requests to the compute layer.
-3.  **Compute:** **AWS Lambda** (running a Docker Container) performs signal preprocessing (MNE-Python) and model inference (TensorFlow).
+3.  **Compute:** **AWS Lambda** (running a Docker Container) performs signal preprocessing (MNE-Python) and model inference (TensorFlow) managed by **FastAPI**.
 4.  **Storage:** **AWS S3** acts as a staging area for large EEG `.set` files using **Presigned URLs** for secure, direct-to-S3 uploads, bypassing Lambda payload limits.
 
 
@@ -41,7 +41,7 @@ The core is a hybrid neural network designed to extract both spatial features an
 ├── backend/                # Lambda + Docker Container logic
 │   ├── lambda_function.py  # Entry point (Flask-WSGI wrapper)
 │   ├── preprocess.py       # MNE-Python signal processing & .set loading
-│   ├── requirements.txt    # Python dependencies (TF, MNE, Flask)
+│   ├── requirements.txt    # Python dependencies (TF, MNE, FastAPI)
 │   └── model/              # Trained Keras (.h5) model
 ├── frontend/               # Optimized Dark-Mode UI
 │   ├── index.html          # UI Structure & Canvas
@@ -69,7 +69,7 @@ docker build -f backend/Dockerfile.dockerfile -t eeg-classifier:v1 ./backend
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin "$ACCOUNT.dkr.ecr.ap-south-1.amazonaws.com"
 docker tag eeg-classifier:v1 "$ECR_URL:v1"
 docker push "$ECR_URL:v1"
-
+```
 
 ### 2\. Frontend (S3 + CloudFront)
 
