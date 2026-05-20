@@ -132,6 +132,6 @@ docker push "$ECR_URL:v1"
 
 ## 👤 Author
 
-**Vivek Vohra** 🌐 [vivekvohra.com](https://vivekvohra.com) | [iplusflow.com](https://iplusflow.com)
+**Vivek Vohra** 🌐 [iplusflow.com](https://iplusflow.com)
 
 *Disclaimer: This platform uses an architecture trained on clinical OpenNeuro EEG data. It is intended for research demonstration purposes and does not constitute a medical diagnosis.*
