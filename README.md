@@ -39,10 +39,33 @@ The core is a hybrid neural network designed to extract both spatial features an
 │   ├── preprocess.py       # MNE-Python signal processing & .set loading
 │   ├── requirements.txt    # Python dependencies (TF, MNE, FastAPI)
 │   └── model/              # Trained Keras (.h5) model
-├── frontend/               # React Frontend (SPA)
-│   ├── src/                # React components, UI, and API logic
-│   ├── package.json        # Node.js dependencies & build scripts
-│   └── dist/               # Compiled production build (generated via Vite/Webpack)
+frontend/                       # React SPA (TypeScript + Vite)
+├── src/
+│   ├── api/                    # API integration & State Slices (AWS endpoints)
+│   │   ├── eegApi.ts
+│   │   └── eegApiSlice.ts
+│   │
+│   ├── components/             # Modular, Reusable UI Components
+│   │   ├── UploadCard.tsx      # Handles S3 Presigned URL uploads
+│   │   ├── ResultsPanel.tsx    # Displays CNN-BiLSTM predictions
+│   │   ├── ProbabilityBar.tsx  # Animated confidence visualizers
+│   │   └── ...                 # (Header, Footer, Fallbacks, etc.)
+│   │
+│   ├── hooks/                  # Custom React Hooks for logic separation
+│   │   ├── useEegAnalysis.ts   # Orchestrates the S3 upload & Lambda prediction
+│   │   └── useEngineWarmup.ts  # Handles Lambda Cold-Start mitigation
+│   │
+│   ├── utils/                  # Helper functions & AI Explainability logic
+│   │   └── insights.ts         # Maps model outputs to clinical insights
+│   │
+│   ├── App.tsx                 # Main application layout
+│   ├── store.ts                # Global state management
+│   └── main.tsx                # React DOM entry point
+│
+├── tsconfig.json               # TypeScript strict configuration
+├── vite.config.ts              # Vite bundler configuration
+├──package.json                # Project dependencies
+│
 ├── research/               # Data Science R&D
 │   ├── train.ipynb         # Training & Validation notebook
 │   └── conference.pdf      # Supporting research paper (TIET)
